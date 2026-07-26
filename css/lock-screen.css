@@ -1,0 +1,87 @@
+#lock-screen {
+    color: white;
+}
+
+.lock-bg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 1;
+    transform: scale(1.02);
+}
+
+.lock-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.2) 100%);
+    z-index: 2;
+}
+
+.lock-time-area {
+    position: absolute;
+    top: 12vh;
+    left: 5vw;
+    z-index: 3;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.35);
+    user-select: none;
+}
+
+.lock-time {
+    font-size: clamp(72px, 12vw, 160px);
+    font-weight: 100;
+    line-height: 1;
+    font-family: "Segoe UI Light", "Segoe UI", "Microsoft YaHei", "微软雅黑", sans-serif;
+    letter-spacing: -2px;
+}
+
+.lock-date {
+    font-size: clamp(18px, 2.2vw, 32px);
+    font-weight: 300;
+    margin-top: 8px;
+    opacity: 0.95;
+}
+
+.lock-bottom-right {
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+    z-index: 4;
+    display: flex;
+    gap: 4px;
+}
+
+.lock-hint {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    font-size: clamp(12px, 1.2vw, 16px);
+    opacity: 0.85;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+    transition: opacity 0.3s;
+}
+
+.lock-hint.hidden {
+    opacity: 0;
+}
+
+@media (max-width: 600px) {
+    .lock-time-area {
+        top: 10vh;
+        left: 6vw;
+    }
+    .lock-bottom-right {
+        bottom: 16px;
+        right: 16px;
+    }
+    .lock-hint {
+        bottom: 48px;
+    }
+}

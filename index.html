@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/lock-screen.css">
+    <link rel="stylesheet" href="css/login-screen.css">
+    <link rel="stylesheet" href="css/welcome.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            cursor: default;
+            user-select: none;
+            -webkit-user-select: none;
+            font-family: "Segoe UI", "Microsoft YaHei", "微软雅黑", sans-serif;
+            background: #000;
+        }
+        input { user-select: text; -webkit-user-select: text; }
+    </style>
+</head>
+<body>
+
+    <div id="lock-screen" class="screen active">
+        <div class="lock-bg" id="lock-bg"></div>
+        <div class="lock-overlay"></div>
+
+        <div class="lock-time-area">
+            <div class="lock-time" id="lock-time">--:--</div>
+            <div class="lock-date" id="lock-date">----年-月-日 星期-</div>
+        </div>
+
+        <div class="lock-bottom-right">
+            <div class="tray-icon" id="lock-network-icon" title="网络">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="white">
+                    <path d="M12 4C7.31 4 3.07 5.9 0 8.98L12 21 24 8.98C20.93 5.9 16.69 4 12 4z" opacity="0"/>
+                    <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/>
+                </svg>
+            </div>
+            <div class="tray-icon" id="lock-ease-icon" title="轻松使用">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="white">
+                    <path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7h-6v13h-2v-6h-2v6H9V9H3V7h18v2z" opacity="0"/>
+                    <circle cx="12" cy="4" r="2"/>
+                    <path d="M19 13v-2H5v2h5v6h2v-6h5v2h2v-2z"/>
+                    <path d="M12 8c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2h2c0-2.21-1.79-4-4-4z"/>
+                </svg>
+            </div>
+            <div class="tray-icon" id="lock-power-icon" title="电源">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="white">
+                    <path d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z" opacity="0"/>
+                    <path d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83z"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="lock-hint" id="lock-hint">
+            <span>按任意键或单击以解锁</span>
+        </div>
+    </div>
+
+    <div id="login-screen" class="screen">
+        <div class="login-bg" id="login-bg"></div>
+        <div class="login-acrylic"></div>
+
+        <div class="login-back" id="login-back" title="返回">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="white">
+                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+            </svg>
+        </div>
+
+        <div class="login-center">
+            <div class="login-avatar">
+                <svg viewBox="0 0 24 24" width="100%" height="100%" fill="#d6d6d6">
+                    <circle cx="12" cy="8" r="4"/>
+                    <path d="M12 14c-4.42 0-8 2.69-8 6v2h16v-2c0-3.31-3.58-6-8-6z"/>
+                </svg>
+            </div>
+            <div class="login-username">Administrator</div>
+
+            <div class="login-input-area" id="login-input-area">
+                <div class="password-wrapper" id="password-wrapper">
+                    <input type="password" id="password-input" placeholder="密码" autocomplete="off" spellcheck="false">
+                    <button class="submit-btn" id="submit-btn" title="提交">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="#fff">
+                            <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="password-hint-icon" id="password-hint-icon" title="显示密码提示">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="rgba(255,255,255,0.6)">
+                        <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="login-error" id="login-error">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="#ff6b6b">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                </svg>
+                <span>密码错误，请重试。</span>
+            </div>
+
+            <div class="signin-options" id="signin-options">
+                <a href="javascript:void(0)" id="signin-options-link">登录选项</a>
+            </div>
+
+            <div class="signin-options-icons" id="signin-options-icons">
+                <div class="option-icon" title="密码" data-type="password">
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="white">
+                        <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+                    </svg>
+                </div>
+                <div class="option-icon" title="PIN" data-type="pin">
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="rgba(255,255,255,0.5)">
+                        <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+                        <text x="12" y="15" text-anchor="middle" font-size="7" font-weight="bold" fill="rgba(255,255,255,0.5)">PIN</text>
+                    </svg>
+                </div>
+                <div class="option-icon" title="图片密码" data-type="picture">
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="rgba(255,255,255,0.5)">
+                        <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="login-bottom-right">
+            <div class="tray-icon" id="login-network-icon" title="网络">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="white">
+                    <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/>
+                </svg>
+            </div>
+            <div class="tray-icon" id="login-lang-icon" title="输入法">
+                <span style="font-size:12px;color:white;font-weight:300;">中/英</span>
+            </div>
+            <div class="tray-icon" id="login-ease-icon" title="轻松使用">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="white">
+                    <circle cx="12" cy="4" r="2"/>
+                    <path d="M19 13v-2H5v2h5v6h2v-6h5v2h2v-2z"/>
+                </svg>
+            </div>
+            <div class="tray-icon" id="login-power-icon" title="电源">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="white">
+                    <path d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <div id="welcome-screen" class="screen">
+        <div class="welcome-wallpaper" id="welcome-bg"></div>
+        <div class="welcome-acrylic"></div>
+        <div class="welcome-center">
+            <div class="welcome-text" id="welcome-text">欢迎</div>
+            <div class="welcome-spinner">
+                <div class="spinner-ring"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="black-screen" class="screen">
+        <div class="shutdown-text" id="shutdown-text"></div>
+    </div>
+
+    <div id="power-menu" class="popup-menu">
+        <div class="menu-item" data-action="sleep">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="white"><path d="M9 2c-1.05 0-2.05.16-3 .46 4.06 1.27 7 5.06 7 9.54 0 4.48-2.94 8.27-7 9.54.95.3 1.95.46 3 .46 5.52 0 10-4.48 10-10S14.52 2 9 2z"/></svg>
+            <span>睡眠</span>
+        </div>
+        <div class="menu-item" data-action="shutdown">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="white"><path d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83z"/></svg>
+            <span>关机</span>
+        </div>
+        <div class="menu-item" data-action="restart">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="white"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+            <span>重启</span>
+        </div>
+    </div>
+
+    <div id="ease-menu" class="popup-menu">
+        <div class="menu-item" data-action="narrator">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="white"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zm-1-11h2v6h-2zm0 8h2v2h-2z"/></svg>
+            <span>讲述人</span>
+        </div>
+        <div class="menu-item" data-action="magnifier">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="white"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            <span>放大镜</span>
+        </div>
+        <div class="menu-item" data-action="osk">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="white"><path d="M20 5H4c-1.1 0-1.99.9-1.99 2L2 17c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm-9 3h2v2h-2V8zm0 3h2v2h-2v-2zM8 8h2v2H8V8zm0 3h2v2H8v-2zm-1 2H5v-2h2v2zm0-3H5V8h2v2zm9 7H8v-2h8v2zm0-4h-2v-2h2v2zm0-3h-2V8h2v2zm3 3h-2v-2h2v2zm0-3h-2V8h2v2z"/></svg>
+            <span>屏幕键盘</span>
+        </div>
+        <div class="menu-item" data-action="contrast">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="white"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16V5c3.87 0 7 3.13 7 7s-3.13 7-7 7z"/></svg>
+            <span>高对比度</span>
+        </div>
+        <div class="menu-item" data-action="sticky">
+            <span style="font-size:13px;">⇧</span>
+            <span>粘滞键</span>
+        </div>
+        <div class="menu-item" data-action="filter">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="white"><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/></svg>
+            <span>筛选键</span>
+        </div>
+    </div>
+
+    <div id="network-menu" class="popup-menu network-panel">
+        <div class="network-title">Wi-Fi</div>
+        <div class="network-item">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="white"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/></svg>
+            <span>已连接</span>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="#0078d4"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </div>
+        <div class="network-item disabled">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="rgba(255,255,255,0.4)"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/></svg>
+            <span>网络设置</span>
+        </div>
+    </div>
+
+    <div id="lang-menu" class="popup-menu lang-panel">
+        <div class="lang-item selected">
+            <span>中文(简体)</span>
+            <span style="margin-left:auto;font-size:11px;opacity:0.7;">键盘</span>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="#0078d4"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </div>
+        <div class="lang-item">
+            <span>英语(美国)</span>
+        </div>
+    </div>
+
+    <script src="js/wallpaper.js"></script>
+    <script src="js/clock.js"></script>
+    <script src="js/icons.js"></script>
+    <script src="js/lock-screen.js"></script>
+    <script src="js/login-screen.js"></script>
+    <script src="js/welcome.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
