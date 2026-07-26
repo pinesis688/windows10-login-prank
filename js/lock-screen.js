@@ -21,6 +21,7 @@
         });
     }
 
+    // Win10 real transition: fade + scale (NOT slide up)
     function goToLogin() {
         if (transitioning) return;
         transitioning = true;
@@ -31,25 +32,24 @@
 
         TrayIcons.closeAll();
 
-        if (hint) hint.classList.add('hidden');
+        // 1. Lock screen content fades out + scales up (0.2s)
+        // 2. Login screen fades in simultaneously (0.5s)
+        // 3. Background scales slightly (0.5s)
+        lockScreen.classList.add('leaving');
+        loginScreen.classList.add('active', 'fade-in');
 
-        lockScreen.classList.add('leaving-up');
-
+        // Focus password after transition
         setTimeout(function() {
-            lockScreen.classList.remove('active', 'leaving-up');
-            lockScreen.style.transform = '';
-            loginScreen.classList.add('active', 'fade-in');
-
             var input = document.getElementById('password-input');
-            if (input) {
-                setTimeout(function() { input.focus(); }, 400);
-            }
+            if (input) input.focus();
+        }, 500);
 
-            setTimeout(function() {
-                loginScreen.classList.remove('fade-in');
-                transitioning = false;
-            }, 500);
-        }, 550);
+        // Remove lock screen after fade out completes
+        setTimeout(function() {
+            lockScreen.classList.remove('active', 'leaving');
+            loginScreen.classList.remove('fade-in');
+            transitioning = false;
+        }, 500);
     }
 
     function goToLock() {
@@ -66,24 +66,18 @@
 
         setTimeout(function() {
             loginScreen.classList.remove('active', 'fade-out');
-
-            lockScreen.classList.add('active', 'entering-down');
-
-            var hint = document.getElementById('lock-hint');
-            if (hint) hint.classList.remove('hidden');
+            lockScreen.classList.add('active', 'entering');
 
             setTimeout(function() {
-                lockScreen.classList.remove('entering-down');
-                lockScreen.style.transform = '';
+                lockScreen.classList.remove('entering');
                 transitioning = false;
-            }, 500);
+            }, 400);
         }, 300);
     }
 
     window.LockScreen = {
         init: function() {
             var lockScreen = document.getElementById('lock-screen');
-            var hint = document.getElementById('lock-hint');
 
             function isInteractiveTarget(target) {
                 return target.closest('.tray-icon') ||

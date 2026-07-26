@@ -20,27 +20,49 @@
 #black-screen { z-index: 30; background: #000; opacity: 0; }
 #black-screen.active { opacity: 1; }
 
-/* Win10 lock screen slides up to reveal login */
-#lock-screen.leaving-up {
-    animation: lockSlideUp 0.55s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+/* Win10 real transition: fade + scale, NOT slide up */
+#lock-screen.leaving {
+    animation: lockFadeOut 0.5s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
 }
 
-#lock-screen.entering-down {
-    animation: lockSlideDown 0.5s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+#lock-screen.entering {
+    animation: lockFadeIn 0.4s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
 }
 
-@keyframes lockSlideUp {
-    from { transform: translateY(0); opacity: 1; }
-    to { transform: translateY(-100%); opacity: 0.3; }
+@keyframes lockFadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
 }
 
-@keyframes lockSlideDown {
-    from { transform: translateY(-100%); opacity: 0.3; }
-    to { transform: translateY(0); opacity: 1; }
+@keyframes lockFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Lock screen content fades out + scales up (real Win10 behavior) */
+#lock-screen.leaving .lock-time-area,
+#lock-screen.leaving .lock-bottom-right,
+#lock-screen.leaving .lock-hint {
+    animation: contentFadeScale 0.2s ease forwards;
+}
+
+@keyframes contentFadeScale {
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0; transform: scale(1.2); }
+}
+
+/* Background scales slightly during transition (real Win10) */
+#lock-screen.leaving .lock-bg {
+    animation: bgScale 0.5s ease forwards;
+}
+
+@keyframes bgScale {
+    from { transform: scale(1); }
+    to { transform: scale(1.05); }
 }
 
 #login-screen.fade-in {
-    animation: loginFadeIn 0.4s ease forwards;
+    animation: loginFadeIn 0.5s ease forwards;
 }
 
 #login-screen.fade-out {
@@ -57,10 +79,9 @@
     to { opacity: 0; }
 }
 
-/* Tray icons - Win10 style */
 .tray-icon {
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -75,7 +96,6 @@
     opacity: 1;
 }
 
-/* Popup menus */
 .popup-menu {
     position: fixed;
     display: none;

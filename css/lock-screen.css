@@ -11,6 +11,7 @@
     background-position: center;
     background-repeat: no-repeat;
     z-index: 1;
+    transition: transform 0.5s ease;
 }
 
 .lock-overlay {
@@ -18,43 +19,48 @@
     top: 0; left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.25) 100%);
+    background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.2) 100%);
     z-index: 2;
 }
 
-/* Win10: time/date at bottom-left */
+/* Win10 real: time at bottom-left, padding 5% 2% */
 .lock-time-area {
     position: absolute;
-    bottom: 8%;
-    left: 5%;
+    bottom: 0;
+    left: 0;
+    padding: 0 0 5% 2%;
     z-index: 3;
     text-shadow: 0 2px 12px rgba(0,0,0,0.5);
     user-select: none;
+    transform-origin: bottom left;
 }
 
+/* Win10 real: clock 6vw, font-weight lighter */
 .lock-time {
-    font-size: clamp(80px, 11vw, 150px);
-    font-weight: 200;
+    font-size: 6vw;
+    font-weight: 300;
     line-height: 1;
     font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
-    letter-spacing: -3px;
+    letter-spacing: -1px;
 }
 
+/* Win10 real: date 2.6vw, font-weight lighter */
 .lock-date {
-    font-size: clamp(16px, 1.8vw, 26px);
-    font-weight: 400;
-    margin-top: 6px;
+    font-size: 2.6vw;
+    font-weight: 300;
+    margin-top: 4px;
     opacity: 0.9;
-    letter-spacing: 0.5px;
 }
 
 .lock-bottom-right {
     position: absolute;
-    bottom: 18px;
-    right: 18px;
+    bottom: 0;
+    right: 0;
+    margin: 0 2% 1.5% 0;
     z-index: 4;
     display: flex;
     gap: 2px;
+    transform-origin: bottom right;
 }
 
 .lock-hint {
@@ -67,19 +73,21 @@
     opacity: 0;
     text-shadow: 0 1px 4px rgba(0,0,0,0.5);
     transition: opacity 0.6s ease 1s;
+    transform-origin: center bottom;
 }
 
 #lock-screen.active .lock-hint {
     opacity: 0.85;
 }
 
-@media (max-width: 600px) {
-    .lock-time-area {
-        bottom: 10%;
-        left: 6%;
-    }
-    .lock-bottom-right {
-        bottom: 14px;
-        right: 14px;
-    }
+@media screen and (max-width: 996px) {
+    .lock-time-area { padding: 0 0 8% 2%; }
+    .lock-time { font-size: 12vw; }
+    .lock-date { font-size: 4.3vw; }
+}
+
+@media screen and (max-width: 480px) {
+    .lock-time-area { padding: 0 0 24% 4%; }
+    .lock-time { font-size: 30vw; }
+    .lock-date { font-size: 8vw; margin-top: -20px; }
 }

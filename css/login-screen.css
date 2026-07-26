@@ -11,18 +11,18 @@
     background-position: center;
     background-repeat: no-repeat;
     z-index: 1;
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
-/* Win10: acrylic blur with dark overlay ~46% */
+/* Win10 real: dark overlay 50%, WITH acrylic blur */
 .login-acrylic {
     position: absolute;
     top: 0; left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.46);
-    backdrop-filter: blur(20px) saturate(125%);
-    -webkit-backdrop-filter: blur(20px) saturate(125%);
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(30px) saturate(125%);
+    -webkit-backdrop-filter: blur(30px) saturate(125%);
     z-index: 2;
 }
 
@@ -47,64 +47,65 @@
     opacity: 1;
 }
 
-/* Win10: login center, slightly above middle */
+/* Win10 real: user-input margin 30vh, text-align center */
 .login-center {
     position: absolute;
-    top: 42%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
+    width: 100%;
+    margin-top: 30vh;
     z-index: 5;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: min(340px, 85vw);
     text-align: center;
 }
 
+/* Win10 real: profile-icon 176px, border-radius 50% */
 .login-avatar {
-    width: 130px;
-    height: 130px;
+    width: 176px;
+    height: 176px;
     border-radius: 50%;
     background: #f0f0f0;
     overflow: hidden;
-    margin-bottom: 16px;
+    margin-bottom: 0;
     box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
+/* Win10 real: name 42px, font-weight lighter, margin 1.5vh 0 */
 .login-username {
-    font-size: 28px;
-    font-weight: 400;
-    margin-bottom: 20px;
+    font-size: 42px;
+    font-weight: 300;
+    margin: 1.5vh 0;
     text-shadow: 0 1px 3px rgba(0,0,0,0.3);
 }
 
 .login-input-area {
     position: relative;
-    width: 100%;
-    max-width: 280px;
+    width: 270px;
 }
 
-/* Win10: simple rectangular input with slight rounding */
+/* Win10 real: pw height 34px, width 270px, border none, inset box-shadow 2px black */
 .password-wrapper {
     display: flex;
     align-items: center;
     width: 100%;
-    height: 36px;
-    background: rgba(255,255,255,0.15);
-    border: 1px solid rgba(255,255,255,0.3);
-    border-radius: 2px;
+    height: 34px;
+    background: rgba(255,255,255,0.1);
+    border: none;
+    border-radius: 0;
     overflow: hidden;
-    transition: border-color 0.2s, background 0.2s;
+    transition: box-shadow 0.2s;
+    box-shadow: inset 0 0 0 2px rgba(0,0,0,0.5);
 }
 
 .password-wrapper:focus-within {
-    border-color: rgba(255,255,255,0.6);
-    background: rgba(255,255,255,0.2);
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,0.6);
 }
 
 .password-wrapper.error {
     animation: errorShake 0.5s ease;
-    border-color: rgba(255,80,80,0.7);
+    box-shadow: inset 0 0 0 2px rgba(255,80,80,0.7);
 }
 
 @keyframes errorShake {
@@ -115,10 +116,11 @@
     80% { transform: translateX(4px); }
 }
 
+/* Win10 real: pw padding 0 7px, no border, no outline */
 #password-input {
     flex: 1;
     height: 100%;
-    padding: 0 10px;
+    padding: 0 7px;
     background: transparent;
     border: none;
     outline: none;
@@ -132,11 +134,10 @@
 }
 
 .submit-btn {
-    width: 36px;
+    width: 34px;
     height: 100%;
     background: transparent;
     border: none;
-    border-left: 1px solid rgba(255,255,255,0.1);
     outline: none;
     cursor: pointer;
     display: flex;
@@ -152,7 +153,7 @@
 
 .password-hint-icon {
     position: absolute;
-    right: 42px;
+    right: 40px;
     top: 50%;
     transform: translateY(-50%);
     width: 20px;
@@ -188,13 +189,14 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
+/* Win10 real: forget/options font-size 14px, margin 20px auto */
 .signin-options {
-    margin-top: 16px;
+    margin-top: 20px;
 }
 
 .signin-options a {
     color: rgba(255,255,255,0.85);
-    font-size: 13px;
+    font-size: 14px;
     text-decoration: none;
     cursor: pointer;
 }
@@ -234,22 +236,27 @@
     background: rgba(255,255,255,0.1);
 }
 
-/* Win10: bottom-right system icons */
+/* Win10 real: bottom-2 margin 0 4% 2% 0 */
 .login-bottom-right {
     position: absolute;
-    bottom: 18px;
-    right: 18px;
+    bottom: 0;
+    right: 0;
+    margin: 0 4% 2% 0;
     z-index: 5;
     display: flex;
     gap: 2px;
 }
 
-@media (max-width: 600px) {
+@media screen and (max-height: 556px) and (orientation: landscape) {
     .login-center {
-        width: 90vw;
+        margin-top: -3vh;
+        transform: scale(0.75);
     }
-    .login-back {
-        top: 20px;
-        left: 20px;
+}
+
+@media screen and (min-width: 2560px) {
+    .login-center {
+        margin-top: 50vh;
+        transform: scale(1.5);
     }
 }
