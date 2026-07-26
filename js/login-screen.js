@@ -99,9 +99,28 @@
             });
         }
 
-        if (hintIcon) {
-            hintIcon.addEventListener('click', function(e) {
+        // 真实 Win10 1903+ 密码框右侧眼睛图标：按住显示密码，松开恢复
+        if (hintIcon && input) {
+            hintIcon.addEventListener('mousedown', function(e) {
                 e.stopPropagation();
+                input.type = 'text';
+            });
+            hintIcon.addEventListener('mouseup', function(e) {
+                e.stopPropagation();
+                input.type = 'password';
+            });
+            hintIcon.addEventListener('mouseleave', function() {
+                input.type = 'password';
+            });
+            // 触摸支持
+            hintIcon.addEventListener('touchstart', function(e) {
+                e.stopPropagation();
+                e.preventDefault();
+                input.type = 'text';
+            }, { passive: false });
+            hintIcon.addEventListener('touchend', function(e) {
+                e.stopPropagation();
+                input.type = 'password';
             });
         }
     }

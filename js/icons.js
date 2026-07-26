@@ -60,11 +60,8 @@
         init: function() {
             attachMenuTrigger('lock-network-icon', 'network-menu');
             attachMenuTrigger('login-network-icon', 'network-menu');
-            attachMenuTrigger('lock-ease-icon', 'ease-menu');
             attachMenuTrigger('login-ease-icon', 'ease-menu');
-            attachMenuTrigger('lock-power-icon', 'power-menu');
             attachMenuTrigger('login-power-icon', 'power-menu');
-            attachMenuTrigger('login-lang-icon', 'lang-menu');
 
             var powerMenu = document.getElementById('power-menu');
             if (powerMenu) {
@@ -76,6 +73,17 @@
                             document.getElementById('black-screen').classList.add('active');
                         }
                     });
+                });
+            }
+
+            // 真实 Win10 输入法指示器：点击切换"中"/"英"（仅显示当前态），并展开语言面板
+            var langIcon = document.getElementById('login-lang-icon');
+            var langIndicator = document.getElementById('lang-indicator');
+            if (langIcon && langIndicator) {
+                langIcon.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    toggleMenu('lang-menu', 'login-lang-icon');
+                    langIndicator.textContent = (langIndicator.textContent === '中') ? '英' : '中';
                 });
             }
         },

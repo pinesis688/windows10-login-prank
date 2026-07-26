@@ -20,13 +20,17 @@
 #black-screen { z-index: 30; background: #000; opacity: 0; }
 #black-screen.active { opacity: 1; }
 
-/* Win10 real transition: fade + scale, NOT slide up */
+/* Win10 real transition (ref: Windows-X Lockscreen.vue):
+   - lockImg: blur(0->12px) + scale(1->1.1), transition 2s
+   - dimmer: opacity 0->0.65, transition 1.5s
+   - sign-in: fadeIn 1s
+   - lockscreen: opacity fade 700ms with 200ms delay */
 #lock-screen.leaving {
-    animation: lockFadeOut 0.5s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+    animation: lockFadeOut 0.7s ease 0.2s forwards;
 }
 
 #lock-screen.entering {
-    animation: lockFadeIn 0.4s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+    animation: lockFadeIn 0.5s ease forwards;
 }
 
 @keyframes lockFadeOut {
@@ -39,30 +43,40 @@
     to { opacity: 1; }
 }
 
-/* Lock screen content fades out + scales up (real Win10 behavior) */
+/* Lock background blurs + scales (real Win10 behavior) */
+#lock-screen.leaving .lock-bg {
+    animation: lockImgBlur 2s ease forwards;
+}
+
+@keyframes lockImgBlur {
+    from { filter: blur(0px); transform: scale(1); }
+    to { filter: blur(12px); transform: scale(1.1); }
+}
+
+/* Dimmer overlay fades in */
+#lock-screen.leaving .lock-overlay {
+    animation: dimmerFade 1.5s ease forwards;
+}
+
+@keyframes dimmerFade {
+    from { opacity: 0; }
+    to { opacity: 0.65; }
+}
+
+/* Lock content fades out */
 #lock-screen.leaving .lock-time-area,
 #lock-screen.leaving .lock-bottom-right,
 #lock-screen.leaving .lock-hint {
-    animation: contentFadeScale 0.2s ease forwards;
+    animation: contentFade 0.4s ease forwards;
 }
 
-@keyframes contentFadeScale {
-    from { opacity: 1; transform: scale(1); }
-    to { opacity: 0; transform: scale(1.2); }
-}
-
-/* Background scales slightly during transition (real Win10) */
-#lock-screen.leaving .lock-bg {
-    animation: bgScale 0.5s ease forwards;
-}
-
-@keyframes bgScale {
-    from { transform: scale(1); }
-    to { transform: scale(1.05); }
+@keyframes contentFade {
+    from { opacity: 1; }
+    to { opacity: 0; }
 }
 
 #login-screen.fade-in {
-    animation: loginFadeIn 0.5s ease forwards;
+    animation: loginFadeIn 1s ease forwards;
 }
 
 #login-screen.fade-out {
@@ -75,8 +89,8 @@
 }
 
 @keyframes loginFadeOut {
-    from { opacity: 1; }
-    to { opacity: 0; }
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-20px); }
 }
 
 .tray-icon {
@@ -135,7 +149,7 @@
     background: rgba(255,255,255,0.1);
 }
 
-.network-panel { min-width: 220px; }
+.network-panel { min-width: 260px; }
 
 .network-title {
     padding: 6px 16px 4px;
@@ -154,9 +168,20 @@
     cursor: pointer;
 }
 
+.network-item .net-status {
+    margin-left: auto;
+    font-size: 11px;
+    color: rgba(255,255,255,0.55);
+}
+
+.network-item .net-check {
+    margin-left: 6px;
+}
+
 .network-item:hover { background: rgba(255,255,255,0.08); }
 .network-item.disabled { color: rgba(255,255,255,0.35); cursor: default; }
 .network-item.disabled:hover { background: transparent; }
+.network-item.disabled .net-status { display: none; }
 
 .lang-panel { min-width: 200px; }
 

@@ -11,25 +11,27 @@
     background-position: center;
     background-repeat: no-repeat;
     z-index: 1;
-    transform: scale(1.05);
+    transform: scale(1.1);
+    filter: blur(12px);
+    -webkit-filter: blur(12px);
 }
 
-/* Win10 real: dark overlay 50%, WITH acrylic blur */
+/* Win10 real: dimmer overlay 65% (ref: Windows-X Lockscreen.vue) */
 .login-acrylic {
     position: absolute;
     top: 0; left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.5);
-    backdrop-filter: blur(30px) saturate(125%);
-    -webkit-backdrop-filter: blur(30px) saturate(125%);
+    background: rgba(26,26,26,0.65);
     z-index: 2;
 }
 
+/* 真实 Win10 多用户场景返回按钮在左下角 */
 .login-back {
     position: absolute;
-    top: 30px;
-    left: 30px;
+    bottom: 0;
+    left: 0;
+    margin: 0 0 2% 2%;
     z-index: 5;
     width: 40px;
     height: 40px;
@@ -72,11 +74,11 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
-/* Win10 real: name 42px, font-weight lighter, margin 1.5vh 0 */
+/* Win10 real: name 42px, font-weight lighter */
 .login-username {
     font-size: 42px;
     font-weight: 300;
-    margin: 1.5vh 0;
+    margin: 16px 0 20px;
     text-shadow: 0 1px 3px rgba(0,0,0,0.3);
 }
 
@@ -97,6 +99,10 @@
     overflow: hidden;
     transition: box-shadow 0.2s;
     box-shadow: inset 0 0 0 2px rgba(0,0,0,0.5);
+}
+
+.password-wrapper:hover:not(:focus-within) {
+    box-shadow: inset 0 0 0 2px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.15);
 }
 
 .password-wrapper:focus-within {
@@ -169,14 +175,16 @@
     opacity: 1;
 }
 
+/* 真实 Win10 错误文字为白色，无图标 */
 .login-error {
     display: none;
     align-items: center;
     justify-content: center;
     gap: 6px;
     margin-top: 12px;
-    color: #ffb0b0;
+    color: #ffffff;
     font-size: 13px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.4);
 }
 
 .login-error.show {
@@ -245,6 +253,20 @@
     z-index: 5;
     display: flex;
     gap: 2px;
+}
+
+/* 真实 Win10 输入法指示器：只显示当前态"中"/"英"，方框背景 */
+.lang-indicator {
+    display: inline-block;
+    min-width: 18px;
+    padding: 1px 3px;
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 3px;
+    font-size: 12px;
+    line-height: 1.4;
+    color: white;
+    font-weight: 400;
+    text-align: center;
 }
 
 @media screen and (max-height: 556px) and (orientation: landscape) {
