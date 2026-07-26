@@ -20,26 +20,27 @@
 #black-screen { z-index: 30; background: #000; opacity: 0; }
 #black-screen.active { opacity: 1; }
 
+/* Win10 lock screen slides up to reveal login */
 #lock-screen.leaving-up {
-    animation: lockSlideUp 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+    animation: lockSlideUp 0.55s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
 }
 
 #lock-screen.entering-down {
-    animation: lockSlideDown 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+    animation: lockSlideDown 0.5s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
 }
 
 @keyframes lockSlideUp {
     from { transform: translateY(0); opacity: 1; }
-    to { transform: translateY(-100%); opacity: 0; }
+    to { transform: translateY(-100%); opacity: 0.3; }
 }
 
 @keyframes lockSlideDown {
-    from { transform: translateY(-100%); opacity: 0; }
+    from { transform: translateY(-100%); opacity: 0.3; }
     to { transform: translateY(0); opacity: 1; }
 }
 
 #login-screen.fade-in {
-    animation: loginFadeIn 0.5s ease forwards;
+    animation: loginFadeIn 0.4s ease forwards;
 }
 
 #login-screen.fade-out {
@@ -56,52 +57,54 @@
     to { opacity: 0; }
 }
 
+/* Tray icons - Win10 style */
 .tray-icon {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     border-radius: 4px;
     opacity: 0.85;
-    transition: background 0.15s, opacity 0.15s;
+    transition: background 0.12s, opacity 0.12s;
 }
 
 .tray-icon:hover {
-    background: rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.12);
     opacity: 1;
 }
 
+/* Popup menus */
 .popup-menu {
     position: fixed;
     display: none;
-    background: rgba(32, 32, 32, 0.92);
-    backdrop-filter: blur(30px) saturate(180%);
-    -webkit-backdrop-filter: blur(30px) saturate(180%);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 7px;
-    padding: 6px 0;
-    min-width: 190px;
+    background: rgba(43, 43, 43, 0.95);
+    backdrop-filter: blur(30px) saturate(150%);
+    -webkit-backdrop-filter: blur(30px) saturate(150%);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 6px;
+    padding: 5px 0;
+    min-width: 180px;
     z-index: 1000;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
 }
 
 .popup-menu.show {
     display: block;
-    animation: menuFadeIn 0.12s ease;
+    animation: menuFadeIn 0.1s ease;
 }
 
 @keyframes menuFadeIn {
-    from { opacity: 0; transform: translateY(4px) scale(0.98); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .menu-item {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 9px 18px;
+    padding: 8px 16px;
     color: white;
     font-size: 13px;
     cursor: pointer;
@@ -109,58 +112,42 @@
 }
 
 .menu-item:hover {
-    background: rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.1);
 }
 
-.network-panel {
-    min-width: 230px;
-}
+.network-panel { min-width: 220px; }
 
 .network-title {
-    padding: 8px 18px 6px;
+    padding: 6px 16px 4px;
     font-size: 11px;
-    color: rgba(255,255,255,0.6);
+    color: rgba(255,255,255,0.5);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
 }
 
 .network-item {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 8px 18px;
+    padding: 7px 16px;
     color: white;
     font-size: 13px;
     cursor: pointer;
 }
 
-.network-item:hover {
-    background: rgba(255,255,255,0.08);
-}
+.network-item:hover { background: rgba(255,255,255,0.08); }
+.network-item.disabled { color: rgba(255,255,255,0.35); cursor: default; }
+.network-item.disabled:hover { background: transparent; }
 
-.network-item.disabled {
-    color: rgba(255,255,255,0.4);
-    cursor: default;
-}
-
-.network-item.disabled:hover {
-    background: transparent;
-}
-
-.lang-panel {
-    min-width: 210px;
-}
+.lang-panel { min-width: 200px; }
 
 .lang-item {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 8px 18px;
+    padding: 7px 16px;
     color: white;
     font-size: 13px;
     cursor: pointer;
 }
 
-.lang-item:hover {
-    background: rgba(255,255,255,0.08);
-}
+.lang-item:hover { background: rgba(255,255,255,0.08); }
